@@ -9,6 +9,7 @@ export default {
   'menu.register-result': 'Register Result',
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.configuration': 'Configuration',
+  'menu.dashboard.configuration.configuration': 'Configuration',
   'menu.dashboard.device': 'Device',
   'menu.dashboard.analysis': 'Analysis',
   'menu.dashboard.monitor': 'Monitor',

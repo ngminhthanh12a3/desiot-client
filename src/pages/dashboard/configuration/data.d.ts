@@ -3,4 +3,6 @@ export type ModalFormNewConfig = {
 };
 export type CardListItemDataType = ModalFormNewConfig & {
   readonly _id: string;
+  user: string;
+  __v: number;
 };

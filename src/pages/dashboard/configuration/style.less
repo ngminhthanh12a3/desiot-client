@@ -17,6 +17,12 @@
           color: @primary-color;
         }
       }
+      .ant-card-body{
+        height: 78px;
+      }
+      .ant-card-cover > img {
+        height: 123px;
+      }
     }
   }
   .item {
@@ -26,6 +32,10 @@
   :global {
     .ant-list .ant-list-item-content-single {
       max-width: 100%;
+    }
+    
+    .ant-row > div {
+      max-width: 200px !important;
     }
   }
 }

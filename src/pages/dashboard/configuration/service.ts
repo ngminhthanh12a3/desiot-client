@@ -1,7 +1,11 @@
 import { request } from 'umi';
-import { ModalFormNewConfig } from './data';
+import { CardListItemDataType, ModalFormNewConfig } from './data';
 
-export async function loadAllConfig() {}
+export async function loadAllConfig(): Promise<{ data: CardListItemDataType[] }> {
+  return request('/api/configs', {
+    method: 'GET',
+  });
+}
 export async function createNewConfig(
   value: ModalFormNewConfig,
   options?: { [key: string]: any },

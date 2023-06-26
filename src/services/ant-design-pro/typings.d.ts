@@ -101,5 +101,6 @@ declare namespace API {
   type DESIoTResponse = {
     type: string;
     content: string;
+    data: any;
   };
 }

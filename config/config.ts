@@ -78,7 +78,16 @@ export default defineConfig({
           name: 'configuration',
           icon: 'smile',
           path: '/dashboard/configuration',
-          component: './dashboard/configuration',
+          routes: [
+            {
+              name: 'configuration',
+              icon: 'smile',
+              path: '/dashboard/configuration',
+              component: './dashboard/configuration',
+              hideInMenu: true,
+            },
+          ],
+          // component: './dashboard/configuration',
         },
         {
           name: 'device',
