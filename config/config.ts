@@ -75,6 +75,12 @@ export default defineConfig({
           redirect: '/dashboard/device',
         },
         {
+          name: 'configuration',
+          icon: 'smile',
+          path: '/dashboard/configuration',
+          component: './dashboard/configuration',
+        },
+        {
           name: 'device',
           icon: 'smile',
           path: '/dashboard/device',
@@ -316,7 +322,7 @@ export default defineConfig({
     },
     {
       path: '/',
-      redirect: '/dashboard/analysis',
+      redirect: '/dashboard/device',
     },
     {
       component: '404',
