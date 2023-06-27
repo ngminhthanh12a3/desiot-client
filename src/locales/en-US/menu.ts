@@ -10,6 +10,8 @@ export default {
   'menu.dashboard': 'Dashboard',
   'menu.dashboard.configuration': 'Configuration',
   'menu.dashboard.configuration.configuration': 'Configuration',
+  'menu.dashboard.configuration.profile': 'Profile',
+  'menu.dashboard.configuration.profile.device': 'Device',
   'menu.dashboard.device': 'Device',
   'menu.dashboard.analysis': 'Analysis',
   'menu.dashboard.monitor': 'Monitor',

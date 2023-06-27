@@ -86,6 +86,26 @@ export default defineConfig({
               component: './dashboard/configuration',
               hideInMenu: true,
             },
+            {
+              name: 'profile',
+              icon: 'smile',
+              path: '/dashboard/configuration/:config_id',
+              component: './dashboard/configuration/profile',
+              hideInMenu: true,
+              routes: [
+                {
+                  path: '/dashboard/configuration/:config_id',
+                  redirect: '/dashboard/configuration/:config_id/device',
+                },
+                {
+                  name: 'device',
+                  icon: 'smile',
+                  path: '/dashboard/configuration/:config_id/device',
+                  component: './dashboard/configuration/profile/device',
+                  // hideInMenu: true,
+                },
+              ],
+            },
           ],
           // component: './dashboard/configuration',
         },
@@ -331,7 +351,7 @@ export default defineConfig({
     },
     {
       path: '/',
-      redirect: '/dashboard/device',
+      redirect: '/dashboard/configuration',
     },
     {
       component: '404',

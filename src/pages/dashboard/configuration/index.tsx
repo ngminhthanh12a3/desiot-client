@@ -1,11 +1,15 @@
 import { PageContainer } from "@ant-design/pro-layout"
 import {  Card, List } from "antd"
 import { FC } from "react"
-import { useRequest } from "umi"
+import { history, useRequest } from "umi"
 import ModalFormNewConfigButton from "./components/modalFormNewConfigButton"
 import type { CardListItemDataType, ModalFormNewConfig } from "./data"
 import { createNewConfig, loadAllConfig } from "./service"
 import styles from "./style.less"
+
+const onCardListItemClick = (item: Partial<CardListItemDataType>) => {
+  history.push(window.location.pathname + `/${item._id}`)
+}
 
 const ConfigurationPage: FC = () => {
     const {loading, data=[], mutate} = useRequest(loadAllConfig)
@@ -35,11 +39,12 @@ const ConfigurationPage: FC = () => {
                 renderItem={(item) => {
                     if (item && item._id) {
                       return (
-                        <List.Item key={item._id} >
+                        <List.Item key={item._id} onClick={() => onCardListItemClick(item)}>
                           <Card
                             hoverable
                             className={styles.card}
                             cover={<img style={{padding:'20px'}} width="100" height="100" src="https://img.icons8.com/ios/100/administrative-tools.png" alt="administrative-tools"/>}
+                            
                           >
                             <Card.Meta
                   
