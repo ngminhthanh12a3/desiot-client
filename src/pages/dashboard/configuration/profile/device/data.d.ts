@@ -1,8 +1,4 @@
-export type TableListItem = {
-  readonly _id: string;
-  name: string;
-  config_id: string;
-};
+export type TableListItem = API.DESIoTDeviceType;
 
 export type TableListPagination = {
   total: number;

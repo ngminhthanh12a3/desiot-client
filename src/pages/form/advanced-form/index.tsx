@@ -116,6 +116,7 @@ const AdvancedForm: FC<Record<string, any>> = () => {
   const onFinish = async (values: Record<string, any>) => {
     setError([]);
     try {
+      console.log(values);
       await fakeSubmitForm(values);
       message.success('提交成功');
     } catch {
@@ -366,8 +367,14 @@ const AdvancedForm: FC<Record<string, any>> = () => {
         <Card title="成员管理" bordered={false}>
           <ProForm.Item name="members">
             <EditableProTable<TableFormDateType>
+              onRow={(data, index) => {
+                return {
+                  style: { cursor: 'pointer' },
+                  // onClick: (e) => console.log(e),
+                };
+              }}
               recordCreatorProps={{
-                record: () => {
+                record: (index, dataSource) => {
                   return {
                     key: `0${Date.now()}`,
                   };

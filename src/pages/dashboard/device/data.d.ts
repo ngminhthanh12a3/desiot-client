@@ -1,0 +1,1 @@
+type DeviceDataType = API.DESIoTDeviceType;

@@ -114,6 +114,15 @@ export default defineConfig({
           icon: 'smile',
           path: '/dashboard/device',
           component: './dashboard/device',
+          hideInMenu: true,
+          routes: [
+            {
+              name: 'info',
+              icon: 'smile',
+              path: '/dashboard/device/:device_id',
+              component: './dashboard/device/info',
+            },
+          ],
         },
         {
           name: 'analysis',

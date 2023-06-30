@@ -103,4 +103,19 @@ declare namespace API {
     content: string;
     data: any;
   };
+  type DESIoTDeviceType = {
+    readonly _id: string;
+    name: string;
+    config_id: string;
+  };
+  type DESIoTPropsType<T> = {
+    match: {
+      url: string;
+      path: string;
+      params: T;
+    };
+    location: {
+      pathname: string;
+    };
+  };
 }

@@ -13,6 +13,7 @@ export default {
   'menu.dashboard.configuration.profile': 'Profile',
   'menu.dashboard.configuration.profile.device': 'Device',
   'menu.dashboard.device': 'Device',
+  'menu.dashboard.device.info': 'Info',
   'menu.dashboard.analysis': 'Analysis',
   'menu.dashboard.monitor': 'Monitor',
   'menu.dashboard.workplace': 'Workplace',
