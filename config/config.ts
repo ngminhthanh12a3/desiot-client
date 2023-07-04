@@ -104,6 +104,13 @@ export default defineConfig({
                   component: './dashboard/configuration/profile/device',
                   // hideInMenu: true,
                 },
+                {
+                  name: 'vstorage',
+                  icon: 'smile',
+                  path: '/dashboard/configuration/:config_id/vstorage',
+                  component: './dashboard/configuration/profile/vstorage',
+                  // hideInMenu: true,
+                },
               ],
             },
           ],
@@ -393,11 +400,11 @@ export default defineConfig({
       schemaPath: join(__dirname, 'oneapi.json'),
       mock: false,
     },
-    {
-      requestLibPath: "import { request } from 'umi'",
-      schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
-      projectName: 'swagger',
-    },
+    // {
+    //   requestLibPath: "import { request } from 'umi'",
+    //   schemaPath: 'https://gw.alipayobjects.com/os/antfincdn/CA1dOm%2631B/openapi.json',
+    //   projectName: 'swagger',
+    // },
   ],
   nodeModulesTransform: {
     type: 'none',

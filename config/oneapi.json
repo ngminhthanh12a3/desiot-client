@@ -16,7 +16,7 @@
     "/api/currentUser": {
       "get": {
         "tags": ["api"],
-        "description": "获取当前的用户",
+        "description": "Current User",
         "operationId": "currentUser",
         "responses": {
           "200": {

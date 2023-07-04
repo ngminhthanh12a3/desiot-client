@@ -5,6 +5,9 @@ import type { TableListItem, TableListPagination } from './data';
 import { ModalFormButton } from './components';
 import { rule, createNewDevice } from './service';
 import { history, useRequest } from 'umi';
+import { Typography } from 'antd';
+
+const { Paragraph } = Typography;
 
 type DeviceParamsType = {
   config_id: string;
@@ -28,6 +31,18 @@ const Device: FC<API.DESIoTPropsType<DeviceParamsType>> = (props) => {
           >
             {dom}
           </a>
+        );
+      },
+    },
+    {
+      title: 'ID',
+      dataIndex: '_id',
+      valueType: 'password',
+      render(dom, entity, index, action, schema) {
+        return (
+          <Paragraph copyable ellipsis>
+            {entity._id}
+          </Paragraph>
         );
       },
     },

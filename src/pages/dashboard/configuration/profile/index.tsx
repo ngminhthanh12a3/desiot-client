@@ -1,10 +1,14 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { FC } from 'react';
-import { useRequest } from 'umi';
+import { history, useRequest } from 'umi';
 const tabList = [
   {
     key: 'device',
     tab: 'Device',
+  },
+  {
+    key: 'vstorage',
+    tab: 'Virtual Storage',
   },
 ];
 
@@ -25,7 +29,11 @@ const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
     return 'device';
   };
 
-  const handleTabChange = () => {};
+  const handleTabChange = (key: string) => {
+    const { match } = props;
+    const url = match.url === '/' ? '' : match.url;
+    history.push(`${url}/${key}`);
+  };
   return (
     <PageContainer
       title={data.name}

@@ -118,4 +118,13 @@ declare namespace API {
       pathname: string;
     };
   };
+  type DESIoTVStorageType = {
+    readonly _id: string;
+    user: string;
+    name: string;
+    config_id: string;
+    type: number;
+    vs_id: number;
+    data: object;
+  };
 }

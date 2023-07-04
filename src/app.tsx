@@ -55,7 +55,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
     rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      // content: initialState?.currentUser?.name,
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
@@ -69,11 +69,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       ? [
           <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
             <LinkOutlined />
-            <span>OpenAPI 文档</span>
+            <span>OpenAPI</span>
           </Link>,
           <Link to="/~docs" key="docs">
             <BookOutlined />
-            <span>业务组件文档</span>
+            <span>Docs</span>
           </Link>,
         ]
       : [],
