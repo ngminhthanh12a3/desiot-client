@@ -111,6 +111,13 @@ export default defineConfig({
                   component: './dashboard/configuration/profile/vstorage',
                   // hideInMenu: true,
                 },
+                {
+                  name: 'UI',
+                  icon: 'smile',
+                  path: '/dashboard/configuration/:config_id/UI',
+                  component: './dashboard/configuration/profile/UI',
+                  // hideInMenu: true,
+                },
               ],
             },
           ],

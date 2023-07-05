@@ -1,4 +1,4 @@
-import { Col, Row } from 'antd';
+import { Card, Col, Row } from 'antd';
 import GGEditor, { Flow } from 'gg-editor';
 
 import { PageContainer } from '@ant-design/pro-layout';
@@ -16,17 +16,20 @@ export default () => (
     <GGEditor className={styles.editor}>
       <Row className={styles.editorHd}>
         <Col span={24}>
+          <Card>editorHd</Card>
           <FlowToolbar />
         </Col>
       </Row>
       <Row className={styles.editorBd}>
         <Col span={4} className={styles.editorSidebar}>
+          <Card>editorSidebar</Card>
           <FlowItemPanel />
         </Col>
         <Col span={16} className={styles.editorContent}>
           <Flow className={styles.flow} />
         </Col>
         <Col span={4} className={styles.editorSidebar}>
+          <Card>hello</Card>
           <FlowDetailPanel />
           <EditorMinimap />
         </Col>

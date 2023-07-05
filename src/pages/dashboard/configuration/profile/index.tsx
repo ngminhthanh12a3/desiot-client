@@ -10,6 +10,10 @@ const tabList = [
     key: 'vstorage',
     tab: 'Virtual Storage',
   },
+  {
+    key: 'UI',
+    tab: 'UI',
+  },
 ];
 
 type ProfileParamsType = {
@@ -41,6 +45,7 @@ const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
       tabList={tabList}
       tabActiveKey={getTabKey()}
       onTabChange={handleTabChange}
+      fixedHeader
     >
       {props.children}
     </PageContainer>

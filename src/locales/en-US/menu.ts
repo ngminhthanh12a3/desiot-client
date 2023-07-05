@@ -13,6 +13,7 @@ export default {
   'menu.dashboard.configuration.profile': 'Profile',
   'menu.dashboard.configuration.profile.device': 'Device',
   'menu.dashboard.configuration.profile.vstorage': 'Virtual Storage',
+  'menu.dashboard.configuration.profile.UI': 'UI',
   'menu.dashboard.device': 'Device',
   'menu.dashboard.device.info': 'Info',
   'menu.dashboard.analysis': 'Analysis',
