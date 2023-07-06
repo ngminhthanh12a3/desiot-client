@@ -1,22 +1,24 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
-import RGL, { Layout, Responsive, WidthProvider } from 'react-grid-layout';
+import RGL, { Responsive, WidthProvider } from 'react-grid-layout';
 import { RGL_UIProps } from '../data';
-import { Card } from 'antd';
-import { useEffect } from 'react';
+import { useModel } from 'umi';
+import { DESIoT_AdditionalAttsOfDroppingItem } from '@/constants';
+import { generateEditaleDOM } from './DOMGenerators';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-const RGL_UI: FC<RGL_UIProps> = (props) => {
-  const [layouts, setLayouts] = useState<RGL.Layouts>({
-    lg: props.form.getFieldValue('initialLayout'),
-  });
+const RGL_UI: FC<RGL_UIProps> = ({ formRef, ...props }) => {
+  const { droppingItem, UIAddItem } = useModel('UI');
+  const { getFieldValue, setFieldValue } = formRef;
   const [currentBreakpoint, setCurrentBreakpoint] = useState('lg');
-  const isDraggingNewItem = useRef(false);
+  const [cols, setCols] = useState({ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 });
   const RRGLRef = useRef<any>();
+
+  // const itemCounter = useRef<number>(getFieldValue('items').length || 0);
   return (
     <ResponsiveReactGridLayout
       {...props}
-      layouts={layouts}
+      // layouts={layouts}
       onBreakpointChange={onBreakpointChange}
       onLayoutChange={onLayoutChange}
       // WidthProvider option
@@ -30,66 +32,43 @@ const RGL_UI: FC<RGL_UIProps> = (props) => {
       isResizable={props.editable}
       isDroppable={props.editable}
       onDrop={onDrop}
-      onDragStart={(
-        layout: Layout[],
-        oldItem: Layout,
-        newItem: Layout,
-        placeholder: Layout,
-        event: MouseEvent,
-        element: HTMLElement,
-      ) => {
-        if (event.type === 'dragover') {
-          isDraggingNewItem.current = true;
-        }
-      }}
-      droppingItem={{
-        i: 'droppingItem' + (layouts[currentBreakpoint] || layouts['lg']).length,
-        w: 2,
-        h: 2,
-      }}
+      droppingItem={droppingItem}
       ref={RRGLRef}
+      style={{ minHeight: 'calc(100vh - 300px)' }}
+      {...{ cols }}
     >
-      {generateDOM()}
+      {props.editable
+        ? generateEditaleDOM(getFieldValue('items'))
+        : generateEditaleDOM(getFieldValue('items'))}
     </ResponsiveReactGridLayout>
   );
 
   function onBreakpointChange(newBreakpoint: string, newCols: number) {
     setCurrentBreakpoint(newBreakpoint);
-    console.log(newBreakpoint);
+    setCols((preCols) => ({ ...preCols, [newBreakpoint]: newCols }));
   }
   function onLayoutChange(currentLayout: RGL.Layout[], allLayouts: RGL.Layouts) {
     props.onLayoutChange && props.onLayoutChange(currentLayout, allLayouts);
-    if (!isDraggingNewItem.current) setLayouts(allLayouts);
-  }
-  function generateDOM() {
-    return _.map(layouts[currentBreakpoint] || layouts['lg'], (l) => {
-      return (
-        <div key={l?.i}>
-          <Card style={{ height: '100%' }}>
-            <span className="text">{l?.i}</span>
-          </Card>
-        </div>
-      );
-    });
+    setFieldValue('layout', currentLayout);
   }
   function onDrop(layout: RGL.Layout[], item: RGL.Layout, e: Event): void {
-    item.i = (layout.length - 1).toString();
+    item = { ...item, ...DESIoT_AdditionalAttsOfDroppingItem[item.i] };
+    const type = item.i;
+
+    const counter = getFieldValue('counter') as number;
+    item.i = counter.toString();
+    setFieldValue('counter', counter + 1);
 
     // fix bug draggable when save.
     delete item.isDraggable;
-    setLayouts((curLayouts) => ({
-      ...curLayouts,
-      [currentBreakpoint]: [...curLayouts[currentBreakpoint], item],
-    }));
-    isDraggingNewItem.current = false;
+    UIAddItem({ ...item, type });
   }
 };
 
 RGL_UI.defaultProps = {
   className: 'layout',
-  rowHeight: 30,
+  rowHeight: 50,
   onLayoutChange: function () {},
-  cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
 };
 
 export default RGL_UI;

@@ -1,22 +1,18 @@
 import { FooterToolbar, ProForm, ProFormInstance } from '@ant-design/pro-components';
 import { Button, FormInstance } from 'antd';
-import { FC, useRef, useState } from 'react';
-import RGL from 'react-grid-layout';
+import { FC, useRef } from 'react';
 import _ from 'lodash';
 import { UIDataType } from '../data';
 import RGL_UI from './RGL_UI';
-type DynamicProFormProps = {
-  editable: boolean;
-  setEditable: React.Dispatch<React.SetStateAction<boolean>>;
-};
+import { useModel } from 'umi';
+type DynamicProFormProps = {};
 const DynamicProForm: FC<DynamicProFormProps> = (props) => {
-  const formRef = useRef<ProFormInstance<UIDataType>>();
-  const { editable, setEditable } = props;
+  const { formRef, editable, setEditable } = useModel('UI');
   return (
     <ProForm
       formRef={formRef}
       request={async (params, props) => {
-        const obj = { initialLayout: generateLayout() };
+        const obj = { items: [], layout: [], counter: 0 };
         return obj;
       }}
       submitter={{
@@ -33,12 +29,25 @@ const DynamicProForm: FC<DynamicProFormProps> = (props) => {
         },
         searchConfig: { submitText: 'Save', resetText: 'Cancel' },
       }}
+      onFinish={async (formData: UIDataType) => {
+        formData.items = await Promise.resolve(
+          formData.items.map((item, index) => ({
+            ...item,
+            ...formData.layout[index],
+          })),
+        );
+        console.log(formData);
+      }}
     >
       <ProForm.Item noStyle shouldUpdate>
-        {(form: FormInstance<UIDataType>) => {
-          return <RGL_UI form={form} editable={editable} />;
+        {(formReF: FormInstance<UIDataType>) => {
+          return <RGL_UI formRef={formReF} editable={editable} />;
         }}
       </ProForm.Item>
+      {/*  */}
+      <ProForm.Item name="items" hidden />
+      <ProForm.Item name="layout" hidden />
+      <ProForm.Item name="counter" hidden />
     </ProForm>
   );
 
@@ -59,17 +68,3 @@ function ToggleEditableBtn({
 }
 
 export default DynamicProForm;
-
-function generateLayout() {
-  return _.map(_.range(0, 5), function (item, i) {
-    var y = Math.ceil(Math.random() * 4) + 1;
-    return {
-      x: (_.random(0, 5) * 2) % 12,
-      y: Math.floor(i / 6) * y,
-      w: 2,
-      h: y,
-      i: i.toString(),
-      static: Math.random() < 0.05,
-    };
-  });
-}

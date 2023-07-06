@@ -1,130 +1,154 @@
 // @ts-ignore
 /* eslint-disable */
 
-declare namespace API {
-  type CurrentUser = {
-    name?: string;
-    avatar?: string;
-    userid?: string;
-    email?: string;
-    signature?: string;
-    title?: string;
-    group?: string;
-    tags?: { key?: string; label?: string }[];
-    notifyCount?: number;
-    unreadCount?: number;
-    country?: string;
-    access?: string;
-    geographic?: {
-      province?: { label?: string; key?: string };
-      city?: { label?: string; key?: string };
-    };
-    address?: string;
-    phone?: string;
-  };
+import { Layout } from 'react-grid-layout';
 
-  type LoginResult = {
-    status?: string;
-    type?: string;
-    currentAuthority?: string;
+// declare namespace API {
+type CurrentUser = {
+  name?: string;
+  avatar?: string;
+  userid?: string;
+  email?: string;
+  signature?: string;
+  title?: string;
+  group?: string;
+  tags?: { key?: string; label?: string }[];
+  notifyCount?: number;
+  unreadCount?: number;
+  country?: string;
+  access?: string;
+  geographic?: {
+    province?: { label?: string; key?: string };
+    city?: { label?: string; key?: string };
   };
+  address?: string;
+  phone?: string;
+};
 
-  type PageParams = {
-    current?: number;
-    pageSize?: number;
-  };
+type LoginResult = {
+  status?: string;
+  type?: string;
+  currentAuthority?: string;
+};
 
-  type RuleListItem = {
-    key?: number;
-    disabled?: boolean;
-    href?: string;
-    avatar?: string;
-    name?: string;
-    owner?: string;
-    desc?: string;
-    callNo?: number;
-    status?: number;
-    updatedAt?: string;
-    createdAt?: string;
-    progress?: number;
-  };
+type PageParams = {
+  current?: number;
+  pageSize?: number;
+};
 
-  type RuleList = {
-    data?: RuleListItem[];
-    /** 列表的内容总数 */
-    total?: number;
-    success?: boolean;
-  };
+type RuleListItem = {
+  key?: number;
+  disabled?: boolean;
+  href?: string;
+  avatar?: string;
+  name?: string;
+  owner?: string;
+  desc?: string;
+  callNo?: number;
+  status?: number;
+  updatedAt?: string;
+  createdAt?: string;
+  progress?: number;
+};
 
-  type FakeCaptcha = {
-    code?: number;
-    status?: string;
-  };
+type RuleList = {
+  data?: RuleListItem[];
+  /** 列表的内容总数 */
+  total?: number;
+  success?: boolean;
+};
 
-  type LoginParams = {
-    username?: string;
-    password?: string;
-    autoLogin?: boolean;
-    type?: string;
-  };
+type FakeCaptcha = {
+  code?: number;
+  status?: string;
+};
 
-  type ErrorResponse = {
-    /** 业务约定的错误码 */
-    errorCode: string;
-    /** 业务上的错误信息 */
-    errorMessage?: string;
-    /** 业务上的请求是否成功 */
-    success?: boolean;
-  };
+type LoginParams = {
+  username?: string;
+  password?: string;
+  autoLogin?: boolean;
+  type?: string;
+};
 
-  type NoticeIconList = {
-    data?: NoticeIconItem[];
-    /** 列表的内容总数 */
-    total?: number;
-    success?: boolean;
-  };
+type ErrorResponse = {
+  /** 业务约定的错误码 */
+  errorCode: string;
+  /** 业务上的错误信息 */
+  errorMessage?: string;
+  /** 业务上的请求是否成功 */
+  success?: boolean;
+};
 
-  type NoticeIconItemType = 'notification' | 'message' | 'event';
+type NoticeIconList = {
+  data?: NoticeIconItem[];
+  /** 列表的内容总数 */
+  total?: number;
+  success?: boolean;
+};
 
-  type NoticeIconItem = {
-    id?: string;
-    extra?: string;
-    key?: string;
-    read?: boolean;
-    avatar?: string;
-    title?: string;
-    status?: string;
-    datetime?: string;
-    description?: string;
-    type?: NoticeIconItemType;
+type NoticeIconItemType = 'notification' | 'message' | 'event';
+
+type NoticeIconItem = {
+  id?: string;
+  extra?: string;
+  key?: string;
+  read?: boolean;
+  avatar?: string;
+  title?: string;
+  status?: string;
+  datetime?: string;
+  description?: string;
+  type?: NoticeIconItemType;
+};
+type DESIoTResponse = {
+  type: string;
+  content: string;
+  data: any;
+};
+type DESIoTDeviceType = {
+  readonly _id: string;
+  name: string;
+  config_id: string;
+};
+type DESIoTPropsType<T> = {
+  match: {
+    url: string;
+    path: string;
+    params: T;
   };
-  type DESIoTResponse = {
-    type: string;
-    content: string;
-    data: any;
+  location: {
+    pathname: string;
   };
-  type DESIoTDeviceType = {
-    readonly _id: string;
-    name: string;
-    config_id: string;
-  };
-  type DESIoTPropsType<T> = {
-    match: {
-      url: string;
-      path: string;
-      params: T;
-    };
-    location: {
-      pathname: string;
-    };
-  };
-  type DESIoTVStorageType = {
-    readonly _id: string;
-    user: string;
-    name: string;
-    config_id: string;
-    type: number;
-    vs_id: number;
-    data: object;
-  };
-}
+};
+type DESIoTVStorageType = {
+  readonly _id: string;
+  user: string;
+  name: string;
+  config_id: string;
+  type: number;
+  vs_id: number;
+  data: object;
+};
+type DESIoTDroppingItemParamsType = {
+  i: string;
+  w: number;
+  h: number;
+};
+type DESIoTDraggableCardProps = {
+  droppingItemParams: DESIoTDroppingItemParamsType;
+};
+type DESIoT_UIDomItemAdditionalAtts = {
+  type: string;
+};
+type DESIoT_UI_DOMContainerProps = {};
+type DESIoT_UIDomItem = Layout & DESIoT_UIDomItemAdditionalAtts;
+type DESIoT_UIDomItems = DESIoT_UIDomItem[];
+
+type DESIoTUIDataType = {
+  items: API.DESIoT_UIDomItems | never[];
+  layout: Layout | never[];
+  counter: number;
+};
+// }
+
+export as namespace API;

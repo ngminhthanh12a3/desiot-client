@@ -1,15 +1,7 @@
 import { FormInstance } from 'antd';
 import RGL, { Layout, WidthProvider, Responsive, Layouts } from 'react-grid-layout';
 
-export type UIDataType = {
-  initialLayout: {
-    x: number;
-    y: number;
-    w: number;
-    h: number;
-    i: string;
-  }[];
-};
+export type UIDataType = API.DESIoTUIDataType;
 
 export type UIProps = {
   className: string;
@@ -22,10 +14,9 @@ export type UIProps = {
 
 //
 export type RGL_UIProps = {
-  form: FormInstance<UIDataType>;
+  formRef: FormInstance<UIDataType>;
   editable: boolean;
   onLayoutChange?(currentLayout: RGL.Layout[], allLayouts: RGL.Layouts): void;
   className?: string;
   rowHeight?: number;
-  cols?: { [size in 'lg' | 'md' | 'sm' | 'xs' | 'xxs']: number };
 };

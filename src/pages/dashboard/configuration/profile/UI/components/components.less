@@ -1,0 +1,53 @@
+.toolbarCardContainer {
+  :global {
+    .ant-card-body:first-child {
+      position: relative;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      //
+      // align-items: center;
+      justify-content: center;
+
+      height: inherit;
+      min-height: 96px;
+      margin-bottom: 8px;
+      padding: 12px;
+      overflow: hidden;
+      transition: width 0.2s, height 0.2s;
+    }
+  }
+}
+
+.divDnD {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 998;
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+  opacity: 0;
+}
+
+.DomEditableGenerator {
+  .divDnD {
+    bottom: 15px;
+  }
+  .divDnD:hover {
+    opacity: 1;
+    .dropDownDnD {
+      display: flex;
+    }
+  }
+}
+
+.dropDownDnD {
+  display: none;
+  justify-content: right;
+  padding: 5px 5px;
+}
