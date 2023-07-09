@@ -116,6 +116,20 @@ export default defineConfig({
                   icon: 'smile',
                   path: '/dashboard/configuration/:config_id/UI',
                   component: './dashboard/configuration/profile/UI',
+                  routes: [
+                    {
+                      name: 'ReadOnlyUIDashboard',
+                      icon: 'smile',
+                      path: '/dashboard/configuration/:config_id/UI/:ui_id',
+                      component: './dashboard/configuration/profile/UI/readOnlyUIDashboard',
+                    },
+                    {
+                      name: 'EditableUIDashboard',
+                      icon: 'smile',
+                      path: '/dashboard/configuration/:config_id/UI/:ui_id/edit',
+                      component: './dashboard/configuration/profile/UI/editableUIDashboard',
+                    },
+                  ],
                   // hideInMenu: true,
                 },
               ],

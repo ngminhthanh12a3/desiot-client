@@ -9,7 +9,7 @@ export async function loadAllConfig(): Promise<{ data: CardListItemDataType[] }>
 export async function createNewConfig(
   value: ModalFormNewConfig,
   options?: { [key: string]: any },
-): Promise<API.DESIoTResponse> {
+): Promise<API.DESIoTResponse<API.DESIoTConfig>> {
   return request('/api/configs', {
     method: 'POST',
     data: value,

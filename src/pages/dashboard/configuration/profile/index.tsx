@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { FC } from 'react';
-import { history, useRequest } from 'umi';
+import { history, useModel, useRequest } from 'umi';
 const tabList = [
   {
     key: 'device',
@@ -21,6 +21,8 @@ type ProfileParamsType = {
 };
 const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
   const { config_id } = props.match.params;
+  const { setConfig_id } = useModel('UI');
+  setConfig_id(config_id);
   const { data = { name: '' }, loading } = useRequest('/api/configs/' + config_id);
 
   const getTabKey = () => {
@@ -36,7 +38,7 @@ const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
   const handleTabChange = (key: string) => {
     const { match } = props;
     const url = match.url === '/' ? '' : match.url;
-    history.push(`${url}/${key}`);
+    history.push(`${url}/${key}`, { config_id });
   };
   return (
     <PageContainer

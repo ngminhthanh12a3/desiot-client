@@ -100,11 +100,24 @@ type NoticeIconItem = {
   description?: string;
   type?: NoticeIconItemType;
 };
-type DESIoTResponse = {
+
+type DESIoTConfig = {
+  name: string;
+  readonly _id: string;
+  user: string;
+  __v: number;
+};
+type DESIoTResponse<T> = {
   type: string;
   content: string;
-  data: any;
+  data: T;
 };
+
+type DESIoTReqParams<P> = {
+  params?: P;
+  options?: any;
+};
+
 type DESIoTDeviceType = {
   readonly _id: string;
   name: string;
@@ -139,6 +152,10 @@ type DESIoTDraggableCardProps = {
 };
 type DESIoT_UIDomItemAdditionalAtts = {
   type: string;
+  config: {
+    title?: string;
+    vs_id?: string;
+  };
 };
 type DESIoT_UI_DOMContainerProps = {};
 type DESIoT_UIDomItem = Layout & DESIoT_UIDomItemAdditionalAtts;
@@ -149,6 +166,13 @@ type DESIoTUIDataType = {
   layout: Layout | never[];
   counter: number;
 };
+
+type DESIoTUIModel = {
+  readonly _id: string;
+  name: string;
+  config_id: string;
+  user: string;
+} & DESIoTUIDataType;
 // }
 
 export as namespace API;

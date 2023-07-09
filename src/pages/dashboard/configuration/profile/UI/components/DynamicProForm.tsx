@@ -1,32 +1,37 @@
-import { FooterToolbar, ProForm, ProFormInstance } from '@ant-design/pro-components';
+import { FooterToolbar, ProForm } from '@ant-design/pro-components';
 import { Button, FormInstance } from 'antd';
-import { FC, useRef } from 'react';
+import { FC } from 'react';
 import _ from 'lodash';
 import { UIDataType } from '../data';
 import RGL_UI from './RGL_UI';
-import { useModel } from 'umi';
-type DynamicProFormProps = {};
+import { history, useModel, useRequest } from 'umi';
+type DynamicProFormProps = {
+  editable: boolean;
+  UIDataReqRun: (...args: any) => Promise<API.DESIoTUIModel>;
+  updateUIDashboardPre?: (params: Partial<API.DESIoTUIDataType>) => void;
+};
+
+type UIDynamicFormRes = API.DESIoTUIDataType;
 const DynamicProForm: FC<DynamicProFormProps> = (props) => {
-  const { formRef, editable, setEditable } = useModel('UI');
+  const { formRef } = useModel('UI');
+  const { editable, UIDataReqRun, updateUIDashboardPre } = props;
+  const {} = useRequest;
   return (
     <ProForm
       formRef={formRef}
-      request={async (params, props) => {
-        const obj = { items: [], layout: [], counter: 0 };
-        return obj;
-      }}
+      request={UIDataReqRun}
       submitter={{
         render: (props, dom) => (
           <FooterToolbar>
-            {editable ? dom : <ToggleEditableBtn onToggleBtnClick={onToggleBtnClick} />}
+            {editable ? <>{dom}</> : <ToggleEditableBtn onToggleBtnClick={onToggleBtnClick} />}
           </FooterToolbar>
         ),
         onReset() {
-          setEditable(false);
+          const readOnlyPathname = history.location.pathname.replace('/edit', '');
+          history.push(readOnlyPathname);
         },
-        onSubmit() {
-          setEditable(false);
-        },
+        onSubmit() {},
+        // resetButtonProps: false,
         searchConfig: { submitText: 'Save', resetText: 'Cancel' },
       }}
       onFinish={async (formData: UIDataType) => {
@@ -36,7 +41,9 @@ const DynamicProForm: FC<DynamicProFormProps> = (props) => {
             ...formData.layout[index],
           })),
         );
-        console.log(formData);
+        const { layout, ...restData } = formData;
+        updateUIDashboardPre && updateUIDashboardPre(restData);
+        return true;
       }}
     >
       <ProForm.Item noStyle shouldUpdate>
@@ -52,7 +59,7 @@ const DynamicProForm: FC<DynamicProFormProps> = (props) => {
   );
 
   function onToggleBtnClick() {
-    setEditable(true);
+    history.push(history.location.pathname + '/edit');
   }
 };
 function ToggleEditableBtn({

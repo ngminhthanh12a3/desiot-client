@@ -25,7 +25,17 @@ const ModalFormButton: FC<ModalFormButtonType> = ({ OnMFAddingDevFinish }) => {
       onFinish={async (values) => OnMFAddingDevFinish(values)}
     >
       <ProForm.Group>
-        <ProFormText name="name" label="Name" placeholder="Device Name" required={true} />
+        <ProFormText
+          name="name"
+          label="Name"
+          placeholder="Device Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please type device name!',
+            },
+          ]}
+        />
       </ProForm.Group>
     </ModalForm>
   );

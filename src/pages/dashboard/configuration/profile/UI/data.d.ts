@@ -20,3 +20,8 @@ export type RGL_UIProps = {
   className?: string;
   rowHeight?: number;
 };
+
+export type UIDashboardProps = {
+  config_id: string;
+  ui_id: string;
+};

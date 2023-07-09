@@ -1,16 +1,16 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import _ from 'lodash';
 import RGL, { Responsive, WidthProvider } from 'react-grid-layout';
 import { RGL_UIProps } from '../data';
 import { useModel } from 'umi';
-import { DESIoT_AdditionalAttsOfDroppingItem } from '@/constants';
+import { DESIoT_AdditionalAttsOfDroppingItem, DESIoT_ItemDefaultConfig } from '@/constants';
 import { generateEditaleDOM } from './DOMGenerators';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
 const RGL_UI: FC<RGL_UIProps> = ({ formRef, ...props }) => {
   const { droppingItem, UIAddItem } = useModel('UI');
   const { getFieldValue, setFieldValue } = formRef;
-  const [currentBreakpoint, setCurrentBreakpoint] = useState('lg');
+  const [, setCurrentBreakpoint] = useState('lg');
   const [cols, setCols] = useState({ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 });
   const RRGLRef = useRef<any>();
 
@@ -22,10 +22,10 @@ const RGL_UI: FC<RGL_UIProps> = ({ formRef, ...props }) => {
       onBreakpointChange={onBreakpointChange}
       onLayoutChange={onLayoutChange}
       // WidthProvider option
-      measureBeforeMount={false}
+      measureBeforeMount={true}
       // I like to have it animate on mount. If you don't, delete `useCSSTransforms` (it's default `true`)
       // and set `measureBeforeMount={true}`.
-      useCSSTransforms={true}
+      useCSSTransforms={false}
       compactType={null}
       preventCollision={true}
       isDraggable={props.editable}
@@ -37,9 +37,7 @@ const RGL_UI: FC<RGL_UIProps> = ({ formRef, ...props }) => {
       style={{ minHeight: 'calc(100vh - 300px)' }}
       {...{ cols }}
     >
-      {props.editable
-        ? generateEditaleDOM(getFieldValue('items'))
-        : generateEditaleDOM(getFieldValue('items'))}
+      {generateEditaleDOM(getFieldValue('items'), props.editable)}
     </ResponsiveReactGridLayout>
   );
 
@@ -61,7 +59,7 @@ const RGL_UI: FC<RGL_UIProps> = ({ formRef, ...props }) => {
 
     // fix bug draggable when save.
     delete item.isDraggable;
-    UIAddItem({ ...item, type });
+    UIAddItem({ ...item, type, config: DESIoT_ItemDefaultConfig[type] });
   }
 };
 
