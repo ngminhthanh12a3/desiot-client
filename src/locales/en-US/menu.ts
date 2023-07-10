@@ -18,6 +18,7 @@ export default {
   'menu.dashboard.configuration.profile.UI.EditableUIDashboard': 'UI Dashboard',
   'menu.dashboard.device': 'Device',
   'menu.dashboard.device.info': 'Info',
+  'menu.dashboard.device.info.UI': 'UI',
   'menu.dashboard.analysis': 'Analysis',
   'menu.dashboard.monitor': 'Monitor',
   'menu.dashboard.workplace': 'Workplace',

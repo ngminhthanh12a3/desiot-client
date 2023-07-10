@@ -140,7 +140,9 @@ type DESIoTVStorageType = {
   config_id: string;
   type: number;
   vs_id: number;
-  data: object;
+  data: {
+    [key: string]: number | string;
+  };
 };
 type DESIoTDroppingItemParamsType = {
   i: string;
@@ -174,5 +176,7 @@ type DESIoTUIModel = {
   user: string;
 } & DESIoTUIDataType;
 // }
+
+type DESIoTDOMItemContent = number | string | any;
 
 export as namespace API;

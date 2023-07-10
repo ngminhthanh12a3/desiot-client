@@ -2,7 +2,7 @@ import { ModalForm, ProCard, ProForm, ProFormText } from '@ant-design/pro-compon
 import { TabsProps } from 'antd';
 import { FC, useEffect, useState } from 'react';
 import { history, useRequest } from 'umi';
-import { createUI } from './service';
+import { createUI, findUI } from './service';
 
 const UI: FC<
   API.DESIoTPropsType<{
@@ -15,7 +15,7 @@ const UI: FC<
     data: items = [],
     mutate: setItems,
     loading,
-  } = useRequest('/api/UI', {
+  } = useRequest(findUI, {
     onSuccess(data, params) {
       const UIDataArray: API.DESIoTUIModel[] = data as API.DESIoTUIModel[];
       setItems(
@@ -26,6 +26,7 @@ const UI: FC<
       );
       setActiveKey(UIDataArray[0]?._id);
     },
+    defaultParams: [{ config_id }],
   });
   const { run: createUIRun } = useRequest(createUI, {
     manual: true,

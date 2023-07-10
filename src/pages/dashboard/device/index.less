@@ -1,14 +1,19 @@
-@import '~antd/es/style/themes/default.less';
+// @import '~antd/es/style/themes/default.less';
+@import (reference) '~antd/es/style/themes/index';
 
 .editor {
-  --layout-heigh: calc(100vh - 300px);
+  :global {
+    .ant-pro-page-container:first-child {
+      margin: 0px 0px 0px;
+    }
+  }
   display: flex;
   flex: 1;
   flex-direction: column;
   width: 100%;
-  height: var(--layout-heigh);
-  overflow-x: hidden;
-  overflow-y: auto;
+  height: @root-ui-layout-heigh;
+  // overflow-x: hidden;
+  // overflow-y: auto;
   background: @component-background;
 }
 
@@ -26,13 +31,13 @@
 .editorContent {
   display: flex;
   flex-direction: column;
-  height: var(--layout-heigh);
+  height: @root-ui-layout-heigh;
   overflow: auto;
 }
 
 .editorSidebar {
   // position: fixed;
-  height: var(--layout-heigh);
+  height: @root-ui-layout-heigh;
   padding: 5px;
   // height: 100%;
   overflow: auto;

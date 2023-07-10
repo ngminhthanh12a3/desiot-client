@@ -72,7 +72,7 @@ export default defineConfig({
       routes: [
         {
           path: '/dashboard',
-          redirect: '/dashboard/device',
+          redirect: '/dashboard/configuration',
         },
         {
           name: 'configuration',
@@ -142,13 +142,25 @@ export default defineConfig({
           icon: 'smile',
           path: '/dashboard/device',
           component: './dashboard/device',
-          hideInMenu: true,
           routes: [
             {
               name: 'info',
               icon: 'smile',
               path: '/dashboard/device/:device_id',
               component: './dashboard/device/info',
+              hideInMenu: true,
+              routes: [
+                {
+                  path: '/dashboard/device/:device_id',
+                  redirect: '/dashboard/device/:device_id/UI',
+                },
+                {
+                  name: 'UI',
+                  icon: 'smile',
+                  path: '/dashboard/device/:device_id/UI',
+                  component: './dashboard/device/info/UI',
+                },
+              ],
             },
           ],
         },
@@ -401,6 +413,7 @@ export default defineConfig({
     // 只有设置为 variable， 才能使用 configProvide 动态设置主色调
     // https://ant.design/docs/react/customize-theme-variable-cn
     'root-entry-name': 'variable',
+    'root-ui-layout-heigh': 'calc(100vh - 80px)',
   },
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild

@@ -2,7 +2,6 @@ import _ from 'lodash';
 import { Card } from 'antd';
 import styles from './components.less';
 import DOMDropdownMenu from './UIToolbox/components/DOMDropdownMenu';
-import { useModel } from 'umi';
 
 export function generateEditaleDOM(items: API.DESIoT_UIDomItems, editable: boolean): JSX.Element[] {
   return _.map(items, (item) => {

@@ -27,3 +27,11 @@ export async function VSSelectRequest(
   }));
   return { data: VSSelectData };
 }
+
+export function findUI(params: { config_id: string }, options: { [key: string]: any } = {}) {
+  return request('/api/UI', {
+    method: 'GET',
+    params,
+    ...options,
+  });
+}

@@ -1,14 +1,20 @@
+import { TabsProps } from 'antd';
 import { request } from 'umi';
 
-export function deviceFind(
+export async function deviceFind(
   params: {
     [key: string]: any;
-  } = { filter: {} },
+  } = {},
   options: { [key: string]: any } = {},
-): Promise<{ data: API.DESIoTDeviceType[] }> {
-  return request('/api/device', {
+) {
+  const deviceList = await request<{ data: API.DESIoTDeviceType[] }>('/api/device', {
     method: 'GET',
     params: params,
     ...options,
   });
+  const tabItems: TabsProps['items'] = deviceList.data.map((datu) => ({
+    key: datu._id,
+    label: datu.name,
+  }));
+  return { data: tabItems };
 }
