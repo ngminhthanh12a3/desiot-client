@@ -4,19 +4,19 @@ const Settings: LayoutSettings & {
   pwa?: boolean;
   logo?: string;
 } = {
-  navTheme: 'light',
-  // 拂晓蓝
+  colorWeak: false,
+  title: 'DESIoT',
+  logo: 'https://img.icons8.com/external-flatart-icons-flat-flatarticons/64/external-cloud-network-and-cloud-computing-flatart-icons-flat-flatarticons-10.png',
+  iconfontUrl: '',
+  footerRender: false,
+  navTheme: 'realDark',
   primaryColor: '#1890ff',
   layout: 'top',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   fixSiderbar: true,
-  colorWeak: false,
-  title: 'DESIoT',
-  pwa: false,
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
-  iconfontUrl: '',
-  footerRender: false,
+  pwa: true,
+  headerHeight: 48,
 };
 
 export default Settings;

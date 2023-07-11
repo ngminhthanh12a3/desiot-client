@@ -186,7 +186,7 @@ export default defineConfig({
     // },
     {
       name: 'configuration',
-      icon: 'smile',
+      icon: 'SettingOutlined',
       path: '/configuration',
       routes: [
         {
@@ -247,7 +247,7 @@ export default defineConfig({
     },
     {
       name: 'device',
-      icon: 'smile',
+      icon: 'ControlOutlined',
       path: '/device',
       component: './device',
       routes: [
