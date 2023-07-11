@@ -19,6 +19,22 @@ export default {
   'menu.dashboard.device': 'Device',
   'menu.dashboard.device.info': 'Info',
   'menu.dashboard.device.info.UI': 'UI',
+
+  //
+  'menu.configuration': 'Configuration',
+  'menu.configuration.configuration': 'Configuration',
+  'menu.configuration.profile': 'Profile',
+  'menu.configuration.profile.device': 'Device',
+  'menu.configuration.profile.vstorage': 'Virtual Storage',
+  'menu.configuration.profile.UI': 'UI',
+  'menu.configuration.profile.UI.ReadOnlyUIDashboard': 'UI Dashboard',
+  'menu.configuration.profile.UI.EditableUIDashboard': 'UI Dashboard',
+
+  //
+  'menu.device': 'Device',
+  'menu.device.info': 'Info',
+  'menu.device.info.UI': 'UI',
+
   'menu.dashboard.analysis': 'Analysis',
   'menu.dashboard.monitor': 'Monitor',
   'menu.dashboard.workplace': 'Workplace',

@@ -1,0 +1,53 @@
+@import '~antd/es/style/themes/default.less';
+
+.editor {
+  --layout-heigh: calc(100vh - 300px);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  height: var(--layout-heigh);
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: @component-background;
+}
+
+.editorHd {
+  padding: 8px;
+  background: @descriptions-bg;
+  border: 1px solid @item-active-bg;
+}
+
+.editorBd {
+  flex: 1;
+}
+
+.editorSidebar,
+.editorContent {
+  display: flex;
+  flex-direction: column;
+  height: var(--layout-heigh);
+  overflow: auto;
+}
+
+.editorSidebar {
+  // position: fixed;
+  height: var(--layout-heigh);
+  padding: 5px;
+  // height: 100%;
+  overflow: auto;
+  // background: @descriptions-bg;
+  &:first-child {
+    border-right: 3px solid @item-active-bg;
+  }
+
+  &:last-child {
+    border-left: 3px solid @item-active-bg;
+  }
+}
+
+.flow,
+.mind,
+.koni {
+  flex: 1;
+}
