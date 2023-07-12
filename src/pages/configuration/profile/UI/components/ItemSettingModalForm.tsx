@@ -10,7 +10,6 @@ const ItemSettingModalForm: FC<{
   run: () => Promise<RequestOptionsType[]>;
 }> = ({ run }) => {
   const { modalFormOpen, setmodalFormOpen, setingItem, UIUpdateItem } = useModel('UI');
-
   return (
     <ModalForm<{
       config: {
@@ -26,6 +25,7 @@ const ItemSettingModalForm: FC<{
         setingItem && UIUpdateItem(setingItem, formData);
         return true;
       }}
+      modalProps={{ destroyOnClose: true }}
     >
       <ProFormText name={['config', 'title']} label="Title" />
       <ProFormSelect
@@ -35,6 +35,7 @@ const ItemSettingModalForm: FC<{
         debounceTime={300}
         placeholder="Select a Virtual Storage"
         request={async () => await run()}
+        initialValue
       />
     </ModalForm>
   );

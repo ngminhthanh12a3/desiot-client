@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Card } from 'antd';
+import { Card, Switch } from 'antd';
 import styles from './components.less';
 import DOMDropdownMenu from './UIToolbox/components/DOMDropdownMenu';
 
@@ -27,6 +27,12 @@ function generateEditableItem(item: API.DESIoT_UIDomItem) {
       return (
         <Card bordered={false} title={title}>
           Content
+        </Card>
+      );
+    case 'switch':
+      return (
+        <Card bordered={false} title={title}>
+          <Switch defaultChecked />
         </Card>
       );
     default:

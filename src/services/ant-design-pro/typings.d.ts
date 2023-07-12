@@ -120,6 +120,8 @@ type DESIoTPropsType<T> = {
     pathname: string;
   };
 };
+type DESIoTVStorageData = number | string;
+
 type DESIoTVStorageType = {
   readonly _id: string;
   user: string;
@@ -128,7 +130,7 @@ type DESIoTVStorageType = {
   type: number;
   vs_id: number;
   data: {
-    [key: string]: number | string;
+    [key: string]: DESIoTVStorageData;
   };
 };
 type DESIoTDroppingItemParamsType = {

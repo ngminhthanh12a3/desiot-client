@@ -1,4 +1,4 @@
-import { Card, Empty } from 'antd';
+import { Card, Switch } from 'antd';
 import _ from 'lodash';
 import { FC, useEffect, useState } from 'react';
 import { useModel } from 'umi';
@@ -6,8 +6,8 @@ import styles from './component.less';
 
 const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
   const [itemContent, setitemContent] = useState<API.DESIoTDOMItemContent>();
-  const { getInitialSyncContent, curSyncDev, vsSyncEEmitter } = useModel('VSSync');
-  const { title, vs_id } = item.config;
+  const { getInitialSyncContent, curSyncDev, vsSyncEEmitter, VSUpdate } = useModel('VSSync');
+  const { title, vs_id = '' } = item.config;
   useEffect(() => {
     getInitialSyncContent(vs_id, curSyncDev).then((initContent) => {
       setitemContent(initContent);
@@ -30,6 +30,16 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
           {itemContent || '<empty>'}
         </Card>
       );
+    case 'switch': {
+      return (
+        <Card bordered={false} title={title}>
+          <Switch
+            checked={!!itemContent}
+            onChange={(checked) => VSUpdate(Number(checked), vs_id, curSyncDev)}
+          />
+        </Card>
+      );
+    }
     default:
       return <></>;
   }

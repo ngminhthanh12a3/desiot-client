@@ -6,6 +6,11 @@ const DESIoT_AdditionalAttsOfDroppingItem: { [key: string]: Partial<Layout> } = 
     minH: 2,
     maxH: 3,
   },
+  switch: {
+    minW: 2,
+    minH: 2,
+    maxH: 2,
+  },
 };
 
 export default DESIoT_AdditionalAttsOfDroppingItem;

@@ -7,7 +7,7 @@ import styles from '../../components.less';
 const DraggableCard: FC<DraggableCardProps> = ({ children, droppingItemParams }) => {
   const { setDroppingItem } = useModel('UI');
   return (
-    <div style={{ height: '100px' }}>
+    <div>
       <Card
         className={styles.toolbarCardContainer}
         draggable
