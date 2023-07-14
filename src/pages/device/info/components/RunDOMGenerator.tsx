@@ -9,7 +9,7 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
   const [itemContent, setitemContent] = useState<API.DESIoTDOMItemContent>();
   const { curSyncDev, vsSyncEEmitter, VSUpdate } = useModel('VSSync');
   const { title, vs_id = '' } = item.config;
-  const { data } = useRequest(vsFindOneService, {
+  const { data, loading } = useRequest(vsFindOneService, {
     defaultParams: [{ _id: vs_id, config_id: curSyncDev?.config_id || '' }],
   });
   useEffect(() => {
@@ -28,27 +28,26 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
       vsSyncEEmitter.current.removeListener(eventName, callback);
     };
   }, [data]);
-
-  switch (item.type) {
-    case 'label':
-      return (
-        <Card bordered={false} title={title}>
-          {itemContent || '<empty>'}
-        </Card>
-      );
-    case 'switch': {
-      return (
-        <Card bordered={false} title={title}>
-          <Switch
-            checked={!!itemContent}
-            onChange={(checked) => VSUpdate(Number(checked), vs_id, curSyncDev)}
-          />
-        </Card>
-      );
-    }
-    default:
-      return <></>;
-  }
+  return (
+    <Card bordered={false} title={title} loading={loading}>
+      {() => {
+        switch (item.type) {
+          case 'label':
+            return <>{itemContent || '<empty>'}</>;
+          case 'switch': {
+            return (
+              <Switch
+                checked={!!itemContent}
+                onChange={(checked) => VSUpdate(Number(checked), vs_id, curSyncDev)}
+              />
+            );
+          }
+          default:
+            return <></>;
+        }
+      }}
+    </Card>
+  );
 };
 
 export function generateRunDOM(items: API.DESIoT_UIDomItems) {
