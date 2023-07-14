@@ -1,11 +1,10 @@
-import { vsFindOneService, VSUpdateService } from '@/services/vsSync';
+import { VSUpdateService } from '@/services/vsSync';
 import { useEffect, useRef, useState } from 'react';
 import { useModel, useRequest } from 'umi';
 import { EventEmitter } from 'events';
 import { io } from 'socket.io-client';
 import { VSSync } from '@/utils';
 export default () => {
-  const { run: vsFindOneRun } = useRequest(vsFindOneService, { manual: true });
   const { run: VSUpdateRun } = useRequest(VSUpdateService, { manual: true });
   const [curSyncDev, setCurSyncDev] = useState<API.DESIoTDeviceType>();
   const { initialState } = useModel('@@initialState');
@@ -23,11 +22,7 @@ export default () => {
     return () => {};
   }, [initialState?.currentUser]);
 
-  return { getInitialSyncContent, curSyncDev, setCurSyncDev, vsSyncEEmitter, VSUpdate };
-  async function getInitialSyncContent(vs_id: string, syncDev?: API.DESIoTDeviceType) {
-    const vsModel = await vsFindOneRun({ _id: vs_id || '', config_id: syncDev?.config_id || '' });
-    return !!syncDev && vsModel?.data[syncDev._id];
-  }
+  return { curSyncDev, setCurSyncDev, vsSyncEEmitter, VSUpdate };
 
   async function VSUpdate(
     content: API.DESIoTVStorageData,
