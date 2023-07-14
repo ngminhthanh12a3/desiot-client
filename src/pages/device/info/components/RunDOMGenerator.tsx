@@ -30,7 +30,7 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
   }, [data]);
   return (
     <Card bordered={false} title={title} loading={loading}>
-      {() => {
+      {(() => {
         switch (item.type) {
           case 'label':
             return <>{itemContent || '<empty>'}</>;
@@ -45,7 +45,7 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
           default:
             return <></>;
         }
-      }}
+      })()}
     </Card>
   );
 };
