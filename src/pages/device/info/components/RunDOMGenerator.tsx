@@ -11,6 +11,7 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
   const { title, vs_id = '' } = item.config;
   const { data, loading } = useRequest(vsFindOneService, {
     defaultParams: [{ _id: vs_id, config_id: curSyncDev?.config_id || '' }],
+    ready: !!vs_id.length,
   });
   useEffect(() => {
     if (!!data) {
@@ -22,10 +23,10 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
     const callback = (data: string) => {
       setitemContent(data);
     };
-    vsSyncEEmitter.current.on(eventName, callback);
+    !!vs_id.length && vsSyncEEmitter.current.on(eventName, callback);
 
     return () => {
-      vsSyncEEmitter.current.removeListener(eventName, callback);
+      !!vs_id.length && vsSyncEEmitter.current.removeListener(eventName, callback);
     };
   }, [data]);
   return (
@@ -39,6 +40,7 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
               <Switch
                 checked={!!itemContent}
                 onChange={(checked) => VSUpdate(Number(checked), vs_id, curSyncDev)}
+                disabled={!vs_id.length}
               />
             );
           }

@@ -9,7 +9,7 @@ const Settings: LayoutSettings & {
   logo: 'https://img.icons8.com/external-flatart-icons-flat-flatarticons/64/external-cloud-network-and-cloud-computing-flatart-icons-flat-flatarticons-10.png',
   iconfontUrl: '',
   footerRender: false,
-  navTheme: 'realDark',
+  navTheme: 'light',
   primaryColor: '#1890ff',
   layout: 'top',
   contentWidth: 'Fluid',
