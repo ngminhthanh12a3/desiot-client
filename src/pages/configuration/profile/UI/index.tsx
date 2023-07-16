@@ -86,6 +86,7 @@ const UI: FC<
           onEdit,
           items,
           onTabClick,
+          destroyInactiveTabPane: true,
         }}
         loading={loading}
       ></ProCard>

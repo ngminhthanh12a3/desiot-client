@@ -14,13 +14,13 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
     ready: !!vs_id.length,
   });
   useEffect(() => {
-    if (!!data) {
+    if (!!data && !!data.data) {
       const dataContent = data.data[curSyncDev?._id || ''];
       setitemContent(dataContent);
     }
     const eventName = `${curSyncDev?._id}-${vs_id}`;
 
-    const callback = (data: string) => {
+    const callback = (data: API.DESIoTDOMItemContent) => {
       setitemContent(data);
     };
     !!vs_id.length && vsSyncEEmitter.current.on(eventName, callback);
@@ -34,7 +34,7 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
       {(() => {
         switch (item.type) {
           case 'label':
-            return <>{itemContent || '<empty>'}</>;
+            return <>{itemContent === undefined ? '<empty>' : itemContent}</>;
           case 'switch': {
             return (
               <Switch

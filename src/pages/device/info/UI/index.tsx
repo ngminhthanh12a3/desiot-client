@@ -18,7 +18,7 @@ const UI: FC<
       );
     },
   });
-  return <Tabs items={UIDashboardTabs} />;
+  return <Tabs items={UIDashboardTabs} destroyInactiveTabPane />;
 };
 
 export default UI;
