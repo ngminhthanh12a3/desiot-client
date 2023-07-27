@@ -1,8 +1,9 @@
 import { ModalForm, ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { TabsProps } from 'antd';
+import _ from 'lodash';
 import { FC, useEffect, useState } from 'react';
 import { history, useRequest } from 'umi';
-import { createUI, findUI } from './service';
+import { createUI, deleteUIService, findUI } from './service';
 
 const UI: FC<
   API.DESIoTPropsType<{
@@ -17,32 +18,30 @@ const UI: FC<
     loading,
   } = useRequest(findUI, {
     onSuccess(data, params) {
-      const UIDataArray: API.DESIoTUIModel[] = data as API.DESIoTUIModel[];
-      setItems(
-        UIDataArray.map((ui) => ({
-          key: ui._id,
-          label: ui.name,
-        })),
-      );
-      setActiveKey(UIDataArray[0]?._id);
+      setActiveKey(data[0]?.key);
     },
     defaultParams: [{ config_id }],
   });
   const { run: createUIRun } = useRequest(createUI, {
     manual: true,
     onSuccess(data, params) {
-      const UIData: API.DESIoTUIModel = data as API.DESIoTUIModel;
-      setItems([
-        ...items,
-        {
-          key: UIData._id,
-          label: UIData.name,
-        },
-      ]);
-      if (activeKey === '') setActiveKey(UIData._id);
+      data?._id &&
+        setItems([
+          ...items,
+          {
+            key: data?._id,
+            label: data?.name,
+          },
+        ]);
+      if (activeKey === '') data?._id && setActiveKey(data?._id);
     },
   });
-
+  const { run: deleteUIRun } = useRequest(deleteUIService, {
+    manual: true,
+    onSuccess(data, params) {
+      setItems((oldItems) => _.reject(oldItems, { key: data._id }));
+    },
+  });
   const [activeKey, setActiveKey] = useState<string>('');
   const [modalVisit, setModalVisit] = useState(false);
   const onChange: TabsProps['onChange'] = (activeKey) => {
@@ -54,7 +53,10 @@ const UI: FC<
       case 'add':
         setModalVisit(true);
         break;
-
+      case 'remove':
+        if (typeof e === 'string')
+          if (confirm('Do you want to delete this UI tab?')) deleteUIRun(e);
+        break;
       default:
         break;
     }
@@ -100,6 +102,7 @@ const UI: FC<
         }}
         onOpenChange={setModalVisit}
         initialValues={{ config_id }}
+        modalProps={{ destroyOnClose: true }}
       >
         <ProFormText
           name="name"

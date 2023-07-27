@@ -3,9 +3,10 @@ import { FC, useRef } from 'react';
 
 import type { TableListItem, TableListPagination } from './data';
 import { ModalFormButton } from './components';
-import { rule, createNewDevice } from './service';
+import { rule, createNewDevice, deleteDeviceService } from './service';
 import { history, useRequest } from 'umi';
-import { Typography } from 'antd';
+import { Popconfirm, Typography } from 'antd';
+import _ from 'lodash';
 
 const { Paragraph } = Typography;
 
@@ -15,6 +16,28 @@ type DeviceParamsType = {
 
 const Device: FC<API.DESIoTPropsType<DeviceParamsType>> = (props) => {
   const { config_id } = props.match.params;
+
+  const actionRef = useRef<ActionType>();
+  const {
+    data: dataSource,
+    mutate,
+    loading,
+  } = useRequest(rule, { defaultParams: [{ config_id }, {}] });
+  const { run: addReqRun } = useRequest(createNewDevice, {
+    manual: true,
+    onSuccess: (data) => mutate((oldData) => [...oldData, data]),
+  });
+  const { run: deleteDeviceRun } = useRequest(deleteDeviceService, {
+    manual: true,
+    onSuccess(data, params) {
+      mutate((oldDevices) => _.reject(oldDevices, { _id: data._id }));
+    },
+  });
+  const OnMFAddingDevFinish = (formData: TableListItem) => {
+    addReqRun({ ...formData, config_id });
+    return true;
+  };
+
   const columns: ProColumns<TableListItem>[] = [
     {
       title: 'Name',
@@ -46,21 +69,26 @@ const Device: FC<API.DESIoTPropsType<DeviceParamsType>> = (props) => {
         );
       },
     },
+    {
+      title: 'Action',
+      key: 'action',
+      sorter: true,
+      valueType: 'option',
+      render: (dom, entity) => [
+        <Popconfirm
+          key="popconfirm-delete"
+          title="Are you sure to delete this device?"
+          onConfirm={() => deleteDeviceRun(entity._id)}
+          // onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <a key="delete">Delete</a>
+        </Popconfirm>,
+      ],
+    },
   ];
-  const actionRef = useRef<ActionType>();
-  const {
-    data: dataSource,
-    mutate,
-    loading,
-  } = useRequest(rule, { defaultParams: [{ config_id }, {}] });
-  const { run: addReqRun } = useRequest(createNewDevice, {
-    manual: true,
-    onSuccess: (data) => mutate((oldData) => [...oldData, data]),
-  });
-  const OnMFAddingDevFinish = (formData: TableListItem) => {
-    addReqRun({ ...formData, config_id });
-    return true;
-  };
+
   return (
     <ProTable<TableListItem, TableListPagination>
       loading={loading}

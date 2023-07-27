@@ -168,4 +168,14 @@ type DESIoTUIModel = {
 
 type DESIoTDOMItemContent = number | string | any;
 
+type DESIoT_VSSyncPacket = {
+  cmd: VSSyncCMDs;
+  data: {
+    _vs_id: string;
+    dev_id: string;
+    data: number | string | undefined;
+    fullDocument: DESIoTVStorageType;
+  };
+};
+
 export as namespace API;

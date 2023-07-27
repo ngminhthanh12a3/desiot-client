@@ -1,17 +1,31 @@
+import { rule } from '@/pages/dashboard/configuration/profile/vstorage/service';
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import {
+  ModalForm,
+  ProForm,
+  ProFormSelect,
+  ProFormText,
+  RequestOptionsType,
+} from '@ant-design/pro-components';
 import { Button, Form } from 'antd';
 import { FC } from 'react';
 import { ModalFormButtonType, TableListItem } from '../data';
 
-const VSIDOptions = Array.from({ length: 32 }, (_, k) => ({
-  value: k,
-  label: `VS${k}`,
-}));
-
 const ModalFormButton: FC<ModalFormButtonType> = ({ onModalFormFinish, config_id }) => {
   const [form] = Form.useForm<TableListItem>();
+  const VSIDOptionRun = async () => {
+    const VSIDOptions: RequestOptionsType[] = Array.from({ length: 32 }, (_, k) => ({
+      value: k,
+      label: `VS${k}`,
+      disabled: false,
+    }));
+    const VSIDOfTheConfig = await rule({ config_id });
+    await VSIDOfTheConfig.data.forEach((vsmodel) => {
+      VSIDOptions[vsmodel.vs_id].disabled = true;
+    });
 
+    return VSIDOptions;
+  };
   return (
     <ModalForm
       title="Add Virtual Storage"
@@ -51,6 +65,10 @@ const ModalFormButton: FC<ModalFormButtonType> = ({ onModalFormFinish, config_id
               value: 0,
               label: 'Integer',
             },
+            {
+              value: 1,
+              label: 'Float',
+            },
           ]}
           rules={[
             {
@@ -64,7 +82,8 @@ const ModalFormButton: FC<ModalFormButtonType> = ({ onModalFormFinish, config_id
           name="vs_id"
           label="Virtual Storage ID"
           placeholder="Virtual Storage ID"
-          options={VSIDOptions}
+          // options={VSIDOptions}
+          request={async () => await VSIDOptionRun()}
           rules={[
             {
               required: true,

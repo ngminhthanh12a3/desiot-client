@@ -1,9 +1,11 @@
 import { ActionType, ProColumns, ProTable } from '@ant-design/pro-components';
+import { Popconfirm } from 'antd';
+import _ from 'lodash';
 import { FC, useRef } from 'react';
 import { useRequest } from 'umi';
 import ModalFormButton from './components/modalFormButton';
 import { TableListItem } from './data';
-import { createVStorage, rule } from './service';
+import { createVStorage, deleteVSService, rule } from './service';
 type VStoragePropsType = {
   config_id: string;
 };
@@ -21,6 +23,13 @@ const VStorage: FC<API.DESIoTPropsType<VStoragePropsType>> = (props) => {
     manual: true,
     onSuccess(data, params) {
       mutate((oldData) => [...oldData, data]);
+    },
+  });
+
+  const { run: deleteVSRun } = useRequest(deleteVSService, {
+    manual: true,
+    onSuccess(data, params) {
+      mutate((oldData) => _.reject(oldData, { _id: data._id }));
     },
   });
   const onModalFormFinish = async (formData: TableListItem) => {
@@ -45,7 +54,26 @@ const VStorage: FC<API.DESIoTPropsType<VStoragePropsType>> = (props) => {
       valueType: 'text',
       valueEnum: {
         0: 'Integer',
+        1: 'Float',
       },
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      sorter: true,
+      valueType: 'option',
+      render: (dom, entity) => [
+        <Popconfirm
+          key="popconfirm-delete"
+          title="Are you sure to delete this Virtual Storage?"
+          onConfirm={() => deleteVSRun(entity._id)}
+          // onCancel={cancel}
+          okText="Yes"
+          cancelText="No"
+        >
+          <a key="delete">Delete</a>
+        </Popconfirm>,
+      ],
     },
   ];
   return (

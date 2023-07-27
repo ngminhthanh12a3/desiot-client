@@ -9,15 +9,28 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
   const [itemContent, setitemContent] = useState<API.DESIoTDOMItemContent>();
   const { curSyncDev, vsSyncEEmitter, VSUpdate } = useModel('VSSync');
   const { title, vs_id = '' } = item.config;
-  const { data, loading } = useRequest(vsFindOneService, {
-    defaultParams: [{ _id: vs_id, config_id: curSyncDev?.config_id || '' }],
-    ready: !!vs_id.length,
-  });
+  // const { data, loading } = useRequest(vsFindOneService, {
+  //   defaultParams: [{ _id: vs_id, config_id: curSyncDev?.config_id || '' }],
+  //   ready: !!vs_id.length,
+  // });
+  // useEffect(() => {
+  //   if (!!data && !!data.data) {
+  //     const dataContent = data.data[curSyncDev?._id || ''];
+  //     setitemContent(dataContent);
+  //   }
+  //   const eventName = `${curSyncDev?._id}-${vs_id}`;
+
+  //   const callback = (data: API.DESIoTDOMItemContent) => {
+  //     setitemContent(data);
+  //   };
+  //   !!vs_id.length && vsSyncEEmitter.current.on(eventName, callback);
+
+  //   return () => {
+  //     !!vs_id.length && vsSyncEEmitter.current.removeListener(eventName, callback);
+  //   };
+  // }, [data]);
+
   useEffect(() => {
-    if (!!data && !!data.data) {
-      const dataContent = data.data[curSyncDev?._id || ''];
-      setitemContent(dataContent);
-    }
     const eventName = `${curSyncDev?._id}-${vs_id}`;
 
     const callback = (data: API.DESIoTDOMItemContent) => {
@@ -25,12 +38,16 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
     };
     !!vs_id.length && vsSyncEEmitter.current.on(eventName, callback);
 
+    // request to fetch data
+    curSyncDev?._id && vsSyncEEmitter.current.emit('vstorage-fetch', curSyncDev, vs_id);
+
     return () => {
       !!vs_id.length && vsSyncEEmitter.current.removeListener(eventName, callback);
     };
-  }, [data]);
+  }, [curSyncDev]);
+
   return (
-    <Card bordered={false} title={title} loading={loading}>
+    <Card bordered={false} title={title}>
       {(() => {
         switch (item.type) {
           case 'label':

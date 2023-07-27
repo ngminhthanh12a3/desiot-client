@@ -7,7 +7,7 @@ import RGL_UI from './RGL_UI';
 import { history, useModel, useRequest } from 'umi';
 type DynamicProFormProps = {
   editable: boolean;
-  UIDataReqRun: (...args: any) => Promise<API.DESIoTUIModel>;
+  UIDataReqRun: (...args: any) => Promise<API.DESIoTUIDataType>;
   updateUIDashboardPre?: (params: Partial<API.DESIoTUIDataType>) => void;
 };
 

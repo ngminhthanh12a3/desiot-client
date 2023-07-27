@@ -1,7 +1,8 @@
+import { EllipsisOutlined } from '@ant-design/icons';
 import { RouteContext } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Descriptions, Typography } from 'antd';
-import { FC, useEffect } from 'react';
+import { Button, Descriptions, Dropdown, MenuProps, Typography } from 'antd';
+import { FC, Fragment, useEffect } from 'react';
 import { history, useModel, useRequest } from 'umi';
 import styles from './style.less';
 
@@ -34,8 +35,19 @@ const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
     return () => {};
   }, []);
 
-  const { data = { name: '' }, loading } = useRequest('/api/configs/' + config_id);
-
+  const { data = { name: '' }, loading } = useRequest<{ data: API.DESIoTConfig }>(
+    '/api/configs/' + config_id,
+  );
+  const { run: deleteConfigRun } = useRequest<{ data: API.DESIoTConfig }>(
+    { url: '/api/configs/' + config_id, method: 'DELETE' },
+    {
+      manual: true,
+      onSuccess(data, params) {
+        const path = props.match.url.replace(/\/[a-z0-9A-Z]{24}/g, '');
+        history.push(path);
+      },
+    },
+  );
   const getTabKey = () => {
     const { match, location } = props;
     const url = match.url === '/' ? '' : match.url;
@@ -64,6 +76,36 @@ const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
     </RouteContext.Consumer>
   );
 
+  const onDeleteConfigHandler = () => {
+    if (confirm('Do you want to delete this configuration?')) {
+      deleteConfigRun();
+    }
+  };
+  const items: MenuProps['items'] = [
+    {
+      label: 'Delete',
+      key: 'delete',
+      danger: true,
+      onClick: () => onDeleteConfigHandler(),
+    },
+  ];
+  const action = (
+    <RouteContext.Consumer>
+      {(isMobile) => {
+        return (
+          <Fragment>
+            <Button.Group>
+              <Dropdown placement="bottomRight" menu={{ items }}>
+                <Button>
+                  <EllipsisOutlined />
+                </Button>
+              </Dropdown>
+            </Button.Group>
+          </Fragment>
+        );
+      }}
+    </RouteContext.Consumer>
+  );
   return (
     <PageContainer
       title={data.name}
@@ -73,6 +115,7 @@ const Profile: FC<API.DESIoTPropsType<ProfileParamsType>> = (props) => {
       onTabChange={handleTabChange}
       content={description}
       fixedHeader
+      extra={action}
     >
       {props.children}
     </PageContainer>

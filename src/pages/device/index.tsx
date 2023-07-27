@@ -1,4 +1,4 @@
-import { Tabs } from 'antd';
+import { Empty, Tabs } from 'antd';
 import { FC, useEffect } from 'react';
 import { history, useLocation, useRequest } from 'umi';
 import styles from './index.less';
@@ -19,24 +19,26 @@ const DevicePage: FC<DevicePageProps> = (props) => {
     [props.children],
   );
   return (
-    <div className={styles.editor}>
-      <div className={styles.editorBd}>
-        <Tabs
-          style={{ height: 'calc(100vh - 80px)' }}
-          tabPosition="left"
-          items={items}
-          activeKey={getActiveKey()}
-          onTabClick={onTabClick}
-          destroyInactiveTabPane
-        />
+    (items?.length && (
+      <div className={styles.editor}>
+        <div className={styles.editorBd}>
+          <Tabs
+            style={{ height: 'calc(100vh - 80px)' }}
+            tabPosition="left"
+            items={items}
+            activeKey={getActiveKey()}
+            onTabClick={onTabClick}
+            destroyInactiveTabPane
+          />
+        </div>
       </div>
-    </div>
+    )) || <Empty />
   );
 
   function getActiveKey() {
     const { url } = props.match;
     const pathNameActiveKey = props.location.pathname.replace(url, '').substring(1, 1 + 24);
-    const curActiveKey = pathNameActiveKey || (items && items[0].key) || '';
+    const curActiveKey = pathNameActiveKey || (items?.length && items[0].key) || '';
     return curActiveKey;
   }
   function onTabClick(activeKey: string) {

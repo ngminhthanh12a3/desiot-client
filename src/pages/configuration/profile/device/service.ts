@@ -32,3 +32,9 @@ export async function createNewDevice(params: Partial<TableListItem>): Promise<{
     },
   });
 }
+
+export function deleteDeviceService(_id: string) {
+  return request<{ data: TableListItem }>('/api/device/' + _id, {
+    method: 'DELETE',
+  });
+}

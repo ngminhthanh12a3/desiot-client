@@ -22,3 +22,10 @@ export function rule(params: { config_id: string }, options: { [key: string]: an
     ...options,
   });
 }
+
+export function deleteVSService(_id: string, options: { [key: string]: any } = {}) {
+  return request<{ data: API.DESIoTVStorageType }>('/api/vstorage/' + _id, {
+    method: 'DELETE',
+    ...options,
+  });
+}
