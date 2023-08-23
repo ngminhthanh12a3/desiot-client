@@ -69,6 +69,10 @@ const ModalFormButton: FC<ModalFormButtonType> = ({ onModalFormFinish, config_id
               value: 1,
               label: 'Float',
             },
+            {
+              value: 2,
+              label: 'String',
+            },
           ]}
           rules={[
             {
