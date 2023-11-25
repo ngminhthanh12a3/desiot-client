@@ -141,12 +141,15 @@ type DESIoTDroppingItemParamsType = {
 type DESIoTDraggableCardProps = {
   droppingItemParams: DESIoTDroppingItemParamsType;
 };
+type DESIoT_UIDomItemAdditionalAttConfig = {
+  title?: string;
+  vs_id?: string;
+  defaultDOMconfig: { [key: string]: any };
+};
+
 type DESIoT_UIDomItemAdditionalAtts = {
   type: string;
-  config: {
-    title?: string;
-    vs_id?: string;
-  };
+  config: DESIoT_UIDomItemAdditionalAttConfig;
 };
 type DESIoT_UI_DOMContainerProps = {};
 type DESIoT_UIDomItem = Layout & DESIoT_UIDomItemAdditionalAtts;

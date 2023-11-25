@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import {
   ModalForm,
+  ProForm,
   ProFormSelect,
   ProFormText,
   RequestOptionsType,
@@ -12,10 +13,7 @@ const ItemSettingModalForm: FC<{
   const { modalFormOpen, setmodalFormOpen, setingItem, UIUpdateItem } = useModel('UI');
   return (
     <ModalForm<{
-      config: {
-        title: string;
-        vs_id: string;
-      };
+      config: API.DESIoT_UIDomItemAdditionalAttConfig;
     }>
       title="UI Setting"
       open={modalFormOpen}
@@ -37,6 +35,7 @@ const ItemSettingModalForm: FC<{
         request={async () => await run()}
         initialValue
       />
+      <ProForm.Item name={['config', 'defaultDOMconfig']} hidden />
     </ModalForm>
   );
 };

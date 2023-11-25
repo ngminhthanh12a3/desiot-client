@@ -35,3 +35,11 @@ export async function RunUIDashboardTabFind(
   }));
   return { data: UIDashboardTabs };
 }
+
+export function filterLineDataService(params: number[], options: { [key: string]: any } = {}) {
+  return request<{ data: number[] }>('/api/dsp/digital_filtering', {
+    method: 'POST',
+    data: params,
+    ...options,
+  });
+}

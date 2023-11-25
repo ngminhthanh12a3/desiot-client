@@ -1,9 +1,11 @@
 import { vsFindOneService } from '@/services/vsSync';
+import { Line } from '@ant-design/charts';
 import { Card, Switch } from 'antd';
 import _ from 'lodash';
 import { FC, useEffect, useState } from 'react';
 import { useModel, useRequest } from 'umi';
 import styles from './component.less';
+import RunDOMFilteringGraph from './RunDOMFilteringGraph';
 
 const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
   const [itemContent, setitemContent] = useState<API.DESIoTDOMItemContent>();
@@ -60,6 +62,9 @@ const RunItemGenerator: FC<{ item: API.DESIoT_UIDomItem }> = ({ item }) => {
                 disabled={!vs_id.length}
               />
             );
+          }
+          case 'filtering graph': {
+            return <RunDOMFilteringGraph itemContent={itemContent} />;
           }
           default:
             return <></>;

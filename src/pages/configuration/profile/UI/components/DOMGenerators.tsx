@@ -2,6 +2,7 @@ import _ from 'lodash';
 import { Card, Switch } from 'antd';
 import styles from './components.less';
 import DOMDropdownMenu from './UIToolbox/components/DOMDropdownMenu';
+import { Line } from '@ant-design/charts';
 
 export function generateEditaleDOM(items: API.DESIoT_UIDomItems, editable: boolean): JSX.Element[] {
   return _.map(items, (item) => {
@@ -35,6 +36,18 @@ function generateEditableItem(item: API.DESIoT_UIDomItem) {
           <Switch defaultChecked />
         </Card>
       );
+    case 'filtering graph': {
+      return (
+        <Card bordered={false} title={title}>
+          <Line
+            {...item.config.defaultDOMconfig}
+            data={item.config.defaultDOMconfig?.data ? item.config.defaultDOMconfig.data : []}
+            animation={false}
+            autoFit
+          />
+        </Card>
+      );
+    }
     default:
       return <>unknow</>;
   }

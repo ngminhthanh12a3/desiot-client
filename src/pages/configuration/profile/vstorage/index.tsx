@@ -56,6 +56,7 @@ const VStorage: FC<API.DESIoTPropsType<VStoragePropsType>> = (props) => {
         0: 'Integer',
         1: 'Float',
         2: 'String',
+        3: 'Float Array',
       },
     },
     {

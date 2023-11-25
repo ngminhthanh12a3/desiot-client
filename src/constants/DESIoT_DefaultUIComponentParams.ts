@@ -9,4 +9,9 @@ export default {
     w: 2,
     h: 2,
   },
+  'filtering graph': {
+    i: 'filtering graph',
+    w: 6,
+    h: 10,
+  },
 };
